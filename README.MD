@@ -1,6 +1,6 @@
 # Multimodal Retrieval Production System
 
-Repository: 
+Clone this repository to a local and/or private location via:
 
 ```bash
 git clone https://github.com/shsad/Multimodal-retrieval-production-system
