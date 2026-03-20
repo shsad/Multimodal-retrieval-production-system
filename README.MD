@@ -7,7 +7,6 @@ git clone https://github.com/shsad/Multimodal-retrieval-production-system
 ```
 
 ### Overview 
-
 This repository implements a **production-ready multimodal content retrieval engine** for blog posts.
 
 The system accepts **text or image queries** and returns the **top 3 most relevant blog post titles**, based on semantic similarity. It combines modern **NLP and computer vision techniques** to enable unified retrieval across modalities.
@@ -20,7 +19,6 @@ The project is designed with **scalability and deployment in mind**, featuring:
  - Deployment on Google Cloud Vertex AI
 
 ### Problem Setting
-
 Given a collection of blog posts (including text and images), the system:
 
  1. Encodes blog post content into feature vectors
