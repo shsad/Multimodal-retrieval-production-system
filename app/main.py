@@ -1,4 +1,4 @@
-"""Module used to serve the ML6 blog post retrieval engine."""
+"""Module used to serve the blog post retrieval engine."""
 
 import os
 import logging
@@ -21,6 +21,9 @@ import clip
 
 # Load models once
 text_model = SentenceTransformer("all-MiniLM-L6-v2")
+# Retrieval-tuned MiniLM; still light enough for CPU.
+#text_model = SentenceTransformer("sentence-transformers/msmarco-MiniLM-L6-cos-v5")
+#text_model = SentenceTransformer("all-MiniLM-L6-v2")
 #text_model = SentenceTransformer("all-MiniLM-L12-v2")
 #text_model = SentenceTransformer("all-mpnet-base-v2")
 clip_model, preprocess = clip.load("ViT-B/16", device="cpu")
@@ -28,7 +31,6 @@ clip_model, preprocess = clip.load("ViT-B/16", device="cpu")
 
 
 import numpy as np
-
 import re
 
 def simple_tokenize(text: str) -> list[str]:
@@ -79,8 +81,7 @@ class PredictionResponse(BaseModel):
     # A list of prediction results, where each item corresponds to an instance in the input request.
 
 
-# --- Data Loading and Encoding (Applicant Implementation) ---
-
+# --- Data Loading and Encoding ---
 
 # TODO: Implement function to load image features
 def load_image_features() -> Optional[Dict[str, Any]]:
@@ -171,6 +172,7 @@ def load_image_features() -> Optional[Dict[str, Any]]:
         load_image_features._cache = None
         return None
 
+# TODO: Implement function to load text features
 def load_text_features() -> Optional[Dict[str, Any]]:
     """
     Loads pre-computed text features. This could be embeddings or features generated
@@ -211,6 +213,7 @@ def load_text_features() -> Optional[Dict[str, Any]]:
         load_text_features._cache = None
         return None
 
+# TODO: Implement function to load image to blogpost title mappings
 def load_image_to_blogpost_mappings() -> Optional[Dict[str, str]]:
     """
     Loads the mapping between image identifiers and blog post titles.
@@ -255,7 +258,7 @@ def load_image_to_blogpost_mappings() -> Optional[Dict[str, str]]:
         load_image_to_blogpost_mappings._cache = None
         return None
     
-
+# TODO: Implement function to encode a single image (if needed at runtime)
 def encode_image(image: Image.Image) -> Optional[Any]:
     """
     Encodes a PIL Image into a feature representation. This is only needed if features
@@ -279,43 +282,8 @@ def encode_image(image: Image.Image) -> Optional[Any]:
     except Exception as e:
         logger.exception(f"Failed to encode image: {e}")
         return None
-#def encode_image(image: Image.Image) -> Optional[Any]:
- #   """
-  #  Encodes a PIL Image into a feature representation. This is only needed if features
-   # are not pre-computed for all possible input images.
 
-    #Args:
-     #   image: The PIL Image to encode.
-
-    #Returns:
-     #   A representation of the image's features, or None if encoding fails.
-    #"""
-    #try:
-     #   import numpy as np
-      #  import torch
-       # import clip
-
-       # if not hasattr(encode_image, "_model"):
-         #   device = "cpu"
-          #  model, preprocess = clip.load("ViT-B/16", device=device)
-           # encode_image._model = model
-            #encode_image._preprocess = preprocess
-            #encode_image._device = device
-
-        #image = image.convert("RGB")
-        #image_input = encode_image._preprocess(image).unsqueeze(0).to(
-         #   encode_image._device
-        #)
-
-        #with torch.no_grad():
-        #   features = encode_image._model.encode_image(image_input)
-
-        #features = features / features.norm(dim=-1, keepdim=True)
-        #return features.cpu().numpy()[0].astype(np.float32)
-    #except Exception as e:
-     #   logger.exception(f"Failed to encode image: {e}")
-      #  return None
-    
+# TODO: Implement function to encode a single text (if needed at runtime)
 def encode_text(text: str) -> Optional[Any]:
     """
     Encodes a text string into a feature representation. This is only needed if features
@@ -338,58 +306,8 @@ def encode_text(text: str) -> Optional[Any]:
         logger.exception(f"Failed to encode text: {e}")
         return None
     
-#def encode_text(text: str) -> Optional[Any]:
- #   """
-  #  Encodes a text string into a feature representation. This is only needed if features
-   # are not pre-computed for all possible input texts.
 
-    #Args:
-     #   text: The text string to encode.
-
-    #Returns:
-     #   A representation of the text's features, or None if encoding fails.
-    #"""
-    #try:
-     #   features = text_model.encode(
-      #      text,
-       #     convert_to_numpy=True,
-        #    normalize_embeddings=True,
-        #)
-        #return features.astype(np.float32)
-    #except Exception as e:
-     #   logger.exception(f"Failed to encode text: {e}")
-      #  return None
-#def encode_text(text: str) -> Optional[Any]:
- #   """
-  #  Encodes a text string into a feature representation. This is only needed if features
-   # are not pre-computed for all possible input texts.
-
-    #Args:
-     #   text: The text string to encode.
-
-    #Returns:
-     #   A representation of the text's features, or None if encoding fails.
-    #"""
-    #try:
-     #   import numpy as np
-      #  from sentence_transformers import SentenceTransformer
-
-       # if not hasattr(encode_text, "_model"):
-        #    encode_text._model = SentenceTransformer("all-mpnet-base-v2")
-
-        #features = encode_text._model.encode(
-         #   text,
-          #  convert_to_numpy=True,
-           # normalize_embeddings=True,
-        #)
-        #return features.astype(np.float32)
-    #except Exception as e:
-     #   logger.exception(f"Failed to encode text: {e}")
-      #  return None
-
-
-# --- Similarity and Ranking (Applicant Implementation) ---
-
+# --- Similarity and Ranking  ---
 # TODO: Implement function to calculate similarity between two feature representations
 def calculate_similarity(feature1: Any, feature2: Any) -> float:
     """
@@ -431,68 +349,6 @@ def calculate_similarity(feature1: Any, feature2: Any) -> float:
     except Exception as e:
         logger.exception(f"Failed to calculate similarity: {e}")
         return -1.0
-#def calculate_similarity(feature1: Any, feature2: Any) -> float:
- #   """
-  #  Calculates similarity between:
-   # - query vector and single stored vector
-    #- query vector and a stack of stored vectors (returns max similarity)
-    #"""
-    #try:
-     #   f1 = np.asarray(feature1, dtype=np.float32)
-      #  f2 = np.asarray(feature2, dtype=np.float32)
-
-        ## Single vector case
-       # if f2.ndim == 1:
-        #    denom = np.linalg.norm(f1) * np.linalg.norm(f2)
-         #   if denom == 0:
-          #      return -1.0
-         #   return float(np.dot(f1, f2) / denom)
-
-        ## Multiple stored vectors case: return best match
-        #if f2.ndim == 2:
-         #   f1_norm = np.linalg.norm(f1)
-          #  f2_norms = np.linalg.norm(f2, axis=1)
-           # denoms = f1_norm * f2_norms
-
-            #valid = denoms > 0
-            #if not np.any(valid):
-             #   return -1.0
-
-            #sims = np.full(f2.shape[0], -1.0, dtype=np.float32)
-            #sims[valid] = (f2[valid] @ f1) / denoms[valid]
-            #return float(np.max(sims))
-
-        #logger.warning(f"Unsupported feature shape: feature2.ndim={f2.ndim}")
-        #return -1.0
-
-    #except Exception as e:
-     #   logger.exception(f"Failed to calculate similarity: {e}")
-      #  return -1.0
-#def calculate_similarity(feature1: Any, feature2: Any) -> float:
- #   """
-  #  Calculates the similarity between two feature representations.
-
-   # Args:
-    #    feature1: The first feature representation.
-     #   feature2: The second feature representation.
-
-    #Returns:
-     #   A float representing the similarity score.
-    #"""
-    #try:
-     #   import numpy as np
-
-      #  f1 = np.asarray(feature1, dtype=np.float32)
-       # f2 = np.asarray(feature2, dtype=np.float32)
-
-        #denom = np.linalg.norm(f1) * np.linalg.norm(f2)
-        #if denom == 0:
-         #   return -1.0
-
-        #return float(np.dot(f1, f2) / denom)
-    #except Exception as e:
-     #   logger.exception(f"Failed to calculate similarity: {e}")
-      #  return -1.0
 
 # TODO: Implement function to get top K ranked items based on similarity
 def get_top_k_ranked_items(
@@ -545,7 +401,6 @@ def get_top_k_ranked_items(
     except Exception as e:
         logger.exception(f"Failed to rank items: {e}")
         return []
-
 
 
 @app.get("/")

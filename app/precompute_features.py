@@ -153,7 +153,9 @@ def main():
     print(f"Using img_to_blog_path: {img_to_blog_path}")
     print(f"Using images_dir: {images_dir}")
 
-    text_model = SentenceTransformer("all-MiniLM-L6-v2")
+    # Must match the model used in `app/main.py`
+
+    #text_model = SentenceTransformer("sentence-transformers/msmarco-MiniLM-L6-cos-v5")
     clip_model, preprocess = clip.load("ViT-B/16", device="cpu")
 
     blog_files = sorted(blogposts_dir.glob("*.json"))
