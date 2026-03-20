@@ -37,6 +37,7 @@ The system is evaluated using the **MRR@3 (Mean Reciprocal Rank)** metric.
 
 The project follows a structured data format:
 
+```text
 data/
 │── orig_data/
 │   ├── blogposts/        # JSON blogpost content
@@ -47,7 +48,7 @@ data/
 │   ├── evaluation_data.json
 │   ├── eval_images/
 │   ├── deployment_test.json
-
+```
 ## Data Source
 
 The system is data-agnostic and can be used with:
