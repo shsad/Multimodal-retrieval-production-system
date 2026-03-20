@@ -17,7 +17,7 @@ The project is designed with **scalability and deployment in mind**, featuring:
  - A FastAPI-based serving layer
  - Containerization via Docker
  - Deployment on Google Cloud Vertex AI
-
+-
 ### Problem Setting
 Given a collection of blog posts (including text and images), the system:
 
