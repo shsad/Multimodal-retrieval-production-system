@@ -1,3 +1,5 @@
+---
+
 # Multimodal Retrieval Production System
 
 Repository: 
@@ -195,7 +197,7 @@ The system is fully containerized and deployable on **Google Cloud Vertex AI**
 
  - Use **CLIP-style joint embedding models** for improved cross-modal alignment
 
- - Add ** vector databases** (FAISS, Pinecone, Weaviate) for scalability
+ - Add **vector databases** (FAISS, Pinecone, Weaviate) for scalability
 
  - Improve ranking via **re-ranking models (cross-encoders)**
 
