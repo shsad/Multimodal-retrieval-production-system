@@ -1,6 +1,6 @@
 # Multimodal Retrieval Production System
 
-Clone repository: 
+Repository: 
 
 ```bash
 git clone https://github.com/shsad/Multimodal-retrieval-production-system
@@ -15,11 +15,8 @@ The system accepts **text or image queries** and returns the **top 3 most releva
 The project is designed with **scalability and deployment in mind**, featuring:
 
  - Precomputed embeddings for efficient inference
-
  - A FastAPI-based serving layer
-
  - Containerization via Docker
-
  - Deployment on Google Cloud Vertex AI
 
 ## Problem Setting
