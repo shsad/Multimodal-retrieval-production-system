@@ -155,6 +155,7 @@ def main():
 
     # Must match the model used in `app/main.py`
 
+    text_model = SentenceTransformer("all-MiniLM-L6-v2")
     #text_model = SentenceTransformer("sentence-transformers/msmarco-MiniLM-L6-cos-v5")
     clip_model, preprocess = clip.load("ViT-B/16", device="cpu")
 
