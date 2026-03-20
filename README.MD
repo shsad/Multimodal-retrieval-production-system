@@ -30,6 +30,8 @@ Given a collection of blog posts (including text and images), the system:
 
 The system is evaluated using the **MRR@3 (Mean Reciprocal Rank)** metric.
 
+---
+
 ### Data
 
 The project follows a structured data format:
@@ -60,11 +62,13 @@ To use your own data:
 2. Store associated images
 3. Create an image-to-blog mapping (`img_to_blog.json`)
 
-## System Architecture
+---
+
+### System Architecture
 
 The retrieval pipeline consists of:
 
-### 1. Feature Engineering (Offline)
+#### 1. Feature Engineering (Offline)
 
 - Text embeddings generated using transformer-based models  
 - Image embeddings generated using vision models  
