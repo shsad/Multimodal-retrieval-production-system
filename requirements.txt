@@ -1,0 +1,11 @@
+fastapi[standard]==0.115.6
+pillow==11.1.0
+torch
+numpy
+clip-anytorch
+ftfy
+regex
+tqdm
+pydantic
+sentence-transformers
+requests
