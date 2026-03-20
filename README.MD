@@ -6,7 +6,7 @@ Repository:
 git clone https://github.com/shsad/Multimodal-retrieval-production-system
 ```
 
-## Overview 
+### Overview 
 
 This repository implements a **production-ready multimodal content retrieval engine** for blog posts.
 
@@ -19,7 +19,7 @@ The project is designed with **scalability and deployment in mind**, featuring:
  - Containerization via Docker
  - Deployment on Google Cloud Vertex AI
 
-## Problem Setting
+### Problem Setting
 
 Given a collection of blog posts (including text and images), the system:
 
