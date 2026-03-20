@@ -74,27 +74,29 @@ The retrieval pipeline consists of:
 - Image embeddings generated using vision models  
 - Features are precomputed and stored for fast retrieval  
 
-### 2. Query Encoding (Online)
+#### 2. Query Encoding (Online)
 
 - Text queries → encoded via text encoder  
 - Image queries → encoded via image encoder  
 
-### 3. Retrieval
+#### 3. Retrieval
 
 - Similarity search (e.g., cosine similarity)  
 - Ranking of blog posts  
 - Top-3 results returned  
 
-### 4. API Layer
+#### 4. API Layer
 
 - Implemented using FastAPI  
 - Handles both text and image queries  
 
-## Implementation Details
+---
 
-The system is implemented as a production-ready pipeline, extending the original skeleton into a complete solution:
+### Implementation Details
 
-- Precomputed embeddings stored in the app/ directory
+The system is implemented as a **production-ready pipeline**, extending the original skeleton into a complete solution:
+
+- Precomputed embeddings stored in the ```app/``` directory
 - Efficient model loading (loaded once at startup)
 - Unified embedding space for text and images
 - Robust handling of image variations (e.g., grayscale, rotation)
@@ -106,35 +108,37 @@ The main application is located in:
 app/main.py
 ```
 
-## Local Testing
+---
 
-## Start the API
+### Local Testing
+
+#### 1. Start the API
 ```bash
 fastapi dev app/main.py
 ```
 
-## Run Evaluation
+#### 2. Run Evaluation
 ```bash
 python app/evaluate.py
 ```
 
-## Evaluation Setup
+#### Evaluation Setup
  - The evaluation uses queries defined in 
-  ```data/eval_data/evaluation_data.json````
+  ```data/eval_data/evaluation_data.json```
  - Includes both:
    - Text queries
    - Image queries
 
-## Notes
+#### Notes
  - The evaluation dataset contains **custom-crafted queries**
  - Queries are designed to map clearly to specific blog posts
  - The system is tested against **corrupted/modified images** (e.g., grayscale, rotated), ensuring robustness
 
-# Deployment
+### Deployment
 
 The system is fully containerized and deployable on **Google Cloud Vertex AI**
 
- 1. ## Setup Google Cloud
+#### 1. Setup Google Cloud
 
  ```bash
  gcloud auth login
@@ -145,7 +149,7 @@ The system is fully containerized and deployable on **Google Cloud Vertex AI**
  gcloud services enable aiplatform.googleapis.com
  ```
 
-2. ## Create Artifact Registry
+#### 2. Create Artifact Registry
  ```bash
  gcloud artifacts repositories create blogpost-search \
  --repository-format=docker \
@@ -153,18 +157,18 @@ The system is fully containerized and deployable on **Google Cloud Vertex AI**
  --description="Blogpost retrieval system"
  ```
 
-3. ## Build & Push Docker Image
+#### 3. Build & Push Docker Image
  ```bash
  gcloud builds submit --region=europe-west1 \
  --tag=europe-west1-docker.pkg.dev/<your-project-id>/blogpost-search/retrieval-engine:latest
  ```
 
-4. ## Deploy to Vertex AI
+#### 4. Deploy to Vertex AI
  ```bash
  python deploy.py --gcp-project-id <your-project-id>
  ```
 
-5. ## Test Deployed Endpoint
+#### 5. Test Deployed Endpoint
  ```bash 
  ENDPOINT_ID=<your_endpoint_id>
  PROJECT_ID=<your_project_id>
@@ -175,7 +179,9 @@ The system is fully containerized and deployable on **Google Cloud Vertex AI**
  --json-request=app/data/eval_data/deployment_test.json
  ``` 
 
-# Key Features
+---
+
+### Key Features
  - Multimodal retrieval (text + image)
  - Fast inference via precomputed embeddings
  - Transformer-based representations
@@ -183,7 +189,9 @@ The system is fully containerized and deployable on **Google Cloud Vertex AI**
  - Deployable on Vertex AI
  - Evaluation using MRR@3
 
-# Possible Extensions
+---
+
+### Possible Extensions
 
  - Use **CLIP-style joint embedding models** for improved cross-modal alignment
 
@@ -195,7 +203,7 @@ The system is fully containerized and deployable on **Google Cloud Vertex AI**
 
  - Extend to **full RAG pipeline for blog Q&A**
 
-
+---
 
 
 
