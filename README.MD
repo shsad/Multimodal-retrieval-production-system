@@ -1,5 +1,3 @@
----
-
 # Multimodal Retrieval Production System
 
 Repository: 
