@@ -28,7 +28,7 @@ Given a collection of blog posts (including text and images), the system:
 
 The system is evaluated using the **MRR@3 (Mean Reciprocal Rank)** metric.
 
-## Data
+### Data
 
 The project follows a structured data format:
 
@@ -44,9 +44,9 @@ data/
 │   ├── eval_images/
 │   ├── deployment_test.json
 ```
-## Data Source
+### Data Source
 
-The system is data-agnostic and can be used with:
+The system is **data-agnostic** and can be used with:
 
 - Personal blog datasets
 - Public blog repositories
@@ -54,9 +54,9 @@ The system is data-agnostic and can be used with:
 
 To use your own data:
 
-- Provide blog posts in JSON format (title + content blocks)
-- Store associated images
-- Create an image-to-blog mapping (`img_to_blog.json`)
+1. Provide blog posts in JSON format (title + content blocks)
+2. Store associated images
+3. Create an image-to-blog mapping (`img_to_blog.json`)
 
 ## System Architecture
 
